@@ -1,0 +1,21 @@
+# Diretórios do IntelliJ, Eclipse e VS Code
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Diretórios de build
+/target/
+/build/
+
+# Dependências baixadas pelo Maven ou Gradle
+/.mvn/
+/.gradle/
+*.jar
+*.war
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
