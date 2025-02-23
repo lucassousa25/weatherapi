@@ -15,7 +15,7 @@ public class WeatherService {
     private final String apiUrl = dotenv.get("OPENWEATHER_URL");
 
     public WeatherResponse getWeather(String city) {
-        String url = apiUrl + "?q=" + city + "&appid=" + apiKey;
+        String url = apiUrl + "?q=" + city + "&lang=pt_br" + "&appid=" + apiKey + "&units=metric";
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(url, HttpMethod.GET, null, WeatherResponse.class);
