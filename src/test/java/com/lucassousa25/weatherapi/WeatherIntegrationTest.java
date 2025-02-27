@@ -24,7 +24,7 @@ public class WeatherIntegrationTest {
     private final TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Test
-    public void deveRetonarPrevisaoQuandoCidadeForValida() {
+    public void getWeather_CidadeValida_RetornarInfoClimaComStatus200() {
         String city = "Santos";
         ResponseEntity<WeatherResponse> response = restTemplate.getForEntity(
                 "http://localhost:" + port + "/api/weather?city=" + city,
@@ -37,7 +37,7 @@ public class WeatherIntegrationTest {
     }
 
     @Test
-    public void deveRetornarErroMessageComStatus404QuandoCidadeNaoExistir() {
+    public void getWeather_CidadeInvalida_RetornarErroMessageComStatus404() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("api/weather?city={city}", "CidadeNãoExistente")
@@ -48,5 +48,19 @@ public class WeatherIntegrationTest {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(404);
+    }
+
+    @Test
+    public void getWeather_CampoCidadeVazio_deveRetornarErroMessageComStatus400() {
+        ErrorMessage responseBody = testClient
+                .get()
+                .uri("api/weather?city={city}", "")
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(400);
     }
 }
