@@ -2,6 +2,7 @@ package com.lucassousa25.weatherapi.service;
 
 import com.lucassousa25.weatherapi.dto.WeatherResponse;
 import com.lucassousa25.weatherapi.exception.CityNotFoundException;
+import com.lucassousa25.weatherapi.exception.MethodArgumentNotValidException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
@@ -31,7 +32,10 @@ public class WeatherService {
 
             if(cod.equals("404")) {
                 throw new CityNotFoundException(message);
-            } else {
+            } else if(cod.equals("400")) {
+                throw new MethodArgumentNotValidException(message);
+            }
+            else {
                 throw new RuntimeException(e);
             }
         }

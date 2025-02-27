@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
-@ToString
 @Getter
+@ToString
 public class ErrorMessage {
 
     private String path;
@@ -26,23 +26,4 @@ public class ErrorMessage {
         this.message = message;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getStatusText() {
-        return statusText;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
