@@ -13,9 +13,25 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WeatherService {
-    private final Dotenv dotenv = Dotenv.load();
-    private final String apiKey = dotenv.get("OPENWEATHER_API_KEY");
-    private final String apiUrl = dotenv.get("OPENWEATHER_URL");
+    private final String apiKey;
+    private final String apiUrl;
+
+    public WeatherService() {
+        Dotenv dotenv;
+        try {
+            dotenv = Dotenv.load();
+        } catch (Exception e) {
+            dotenv = null;
+        }
+
+        if (dotenv != null) {
+            this.apiKey = dotenv.get("OPENWEATHER_API_KEY");
+            this.apiUrl = dotenv.get("OPENWEATHER_URL");
+        } else {
+            this.apiKey = System.getenv("OPENWEATHER_API_KEY");
+            this.apiUrl = System.getenv("OPENWEATHER_URL");
+        }
+    }
 
     public WeatherResponse getWeather(String city) {
         String url = apiUrl + "?q=" + city + "&lang=pt_br" + "&appid=" + apiKey + "&units=metric";
